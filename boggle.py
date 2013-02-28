@@ -16,7 +16,7 @@ import sys
 Parses the arguments from the command line and calls the function boggle
 """
 
-board = sys.argv[1]
+letters = sys.argv[1]
 n = int(sys.argv[2])
 if len(sys.argv) == 4:
     dictionary_path = sys.argv[3]
@@ -36,18 +36,18 @@ def create_dictionary(dictionary=dictionary_path):
         print "No dictionary at", dictionary_path, ". Please enter path to dictionary at command line."
         sys.exit()
 
-def boggle(board):
+def boggle(letters):
     """
     Prints all permutations that are available in the dictionary
     """
     result = []
     words = create_dictionary()
-    board = board.lower()
+    letters = letters.lower()
     
     # Iterates through all possible lengths (words of length 3 - length of board)
     word_possibilities = []
-    for i in xrange(3, len(board)+1):
-        permutations = itertools.permutations(board, i)
+    for i in xrange(3, len(letters)+1):
+        permutations = itertools.permutations(letters, i)
         for p in permutations:  
             word_possibilities.append(''.join(elem[0] for elem in p)) # Joins letters into one string
         # pdb.set_trace()
@@ -74,8 +74,8 @@ def dfs(graph, word, node=' '):
     return False
 
 if __name__ == "__main__":
-    permutations = boggle(board)
-    board, position = boggle_graph.make_board(board, n)
+    permutations = boggle(letters)
+    board, position = boggle_graph.make_board(letters, n)
     graph = boggle_graph.make_graph(board, position)
     count = 0
     for word in permutations:
