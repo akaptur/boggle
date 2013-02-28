@@ -18,16 +18,23 @@ Parses the arguments from the command line and calls the function boggle
 
 board = sys.argv[1]
 n = int(sys.argv[2])
+if len(sys.argv) == 4:
+    dictionary_path = sys.argv[3]
+else:
+    dictionary_path = '/usr/share/dict/words'
 
 visited = {}
 
-def create_dictionary(dictionary='/usr/share/dict/words'):
+def create_dictionary(dictionary=dictionary_path):
     """
     Imports words from a local dictionary into a python set
     """
-    with open(dictionary, 'r') as f:
-        return {line.strip() for line in f.readlines()}
- 
+    try:
+        with open(dictionary, 'r') as f:
+            return {line.strip() for line in f.readlines()}
+    except IOError:
+        print "No dictionary at /usr/share/dict/words. Please enter path to dictionary at command line."
+
 def power_set(permutations, n):
     """
     Returns the set of permutations of length n from the power set of the elements
