@@ -11,7 +11,7 @@ def make_board(letters, board_dimensions):
 	position = {}
 	x = 0
 	y = 0
-	for letter in (' '.join(letters)).split():
+	for letter in letters:
 		position[x, y] = letter.lower()
 		y += 1
 		if y >= board_dimensions:
