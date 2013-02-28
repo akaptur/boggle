@@ -33,7 +33,8 @@ def create_dictionary(dictionary=dictionary_path):
         with open(dictionary, 'r') as f:
             return {line.strip() for line in f.readlines()}
     except IOError:
-        print "No dictionary at /usr/share/dict/words. Please enter path to dictionary at command line."
+        print "No dictionary at", dictionary_path, ". Please enter path to dictionary at command line."
+        sys.exit()
 
 def power_set(permutations, n):
     """
