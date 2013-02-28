@@ -31,7 +31,7 @@ def create_dictionary(dictionary=dictionary_path):
     """
     try:
         with open(dictionary, 'r') as f:
-            return {line.strip() for line in f.readlines()}
+            return {line.strip().lower() for line in f.readlines()}
     except IOError:
         print "No dictionary at", dictionary_path, ". Please enter path to dictionary at command line."
         sys.exit()
@@ -71,6 +71,7 @@ def boggle(board):
     """
     result = []
     words = create_dictionary()
+    board = board.lower()
     
     # Iterates through all possible lengths (words of length 3 - length of board)
     for i in xrange(3, len(board)+1):
