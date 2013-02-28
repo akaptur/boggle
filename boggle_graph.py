@@ -26,17 +26,15 @@ def get_neighbors(node, board, position):
 	"""
 	Returns a list of the reachable neighbors of a certain node at position (x,y) on the board
 	"""
-	result = []
 	x, y = position
 	a, b = x-1, y-1
 	neighbors = [(board[x-1][y-1], (a-1,b-1)), (board[x-1][y], (a-1,b)), \
 				(board[x-1][y+1], (a-1, b+1)), (board[x][y-1], (a, b-1)), \
 				(board[x][y+1], (a,b+1)), (board[x+1][y-1], (a+1, b-1)), \
 				(board[x+1][y], (a+1, b)), (board[x+1][y+1], (a+1, b+1))]
-	for neighbor in neighbors:
-		if neighbor[0]:
-			result.append(neighbor)
-	return result
+
+	neighbors = [n for n in neighbors if n[0]]
+	return neighbors
 
 def make_graph(board, position):
 	"""
