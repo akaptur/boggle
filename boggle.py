@@ -67,7 +67,7 @@ def permutation(elements, length):
 
 def boggle(board):
     """
-    Prints all permutations that are availbale in the dictionary
+    Prints all permutations that are available in the dictionary
     """
     result = []
     words = create_dictionary()
