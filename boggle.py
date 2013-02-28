@@ -23,7 +23,7 @@ visited = {}
 
 def create_dictionary(dictionary='/usr/share/dict/words'):
     """
-    Imports words from a local dictionary into a python dictionary
+    Imports words from a local dictionary into a python set
     """
     with open(dictionary, 'r') as f:
         return {line.strip() for line in f.readlines()}
