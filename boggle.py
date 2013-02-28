@@ -36,35 +36,6 @@ def create_dictionary(dictionary=dictionary_path):
         print "No dictionary at", dictionary_path, ". Please enter path to dictionary at command line."
         sys.exit()
 
-def power_set(permutations, n):
-    """
-    Returns the set of permutations of length n from the power set of the elements
-    """
-    results = []
-
-    for perm in permutations:
-        results.append(perm[:n])
-    return set(results)
-
-def permutation(elements, length):
-    """
-    Returns all permutations of the given elements
-    """
-
-    # return set(itertools.permutations(board, length))
-
-    result = []
-
-    #base case
-    if len(elements) <= 1:
-        return elements
-
-    #recursive case
-    for i, element in enumerate(elements):
-        for perm in permutation(elements[:i]+elements[i+1:], length):
-            result.append(element + perm)
-    return power_set(result, length)
-
 def boggle(board):
     """
     Prints all permutations that are available in the dictionary
@@ -74,15 +45,14 @@ def boggle(board):
     board = board.lower()
     
     # Iterates through all possible lengths (words of length 3 - length of board)
+    word_possibilities = []
     for i in xrange(3, len(board)+1):
-        permutations = permutation(board, i)
-        perm = []
+        permutations = itertools.permutations(board, i)
         for p in permutations:  
-            perm.append(''.join(elem[0] for elem in p)) # Joins letters into one string
-        for item in (perm):
-            if item.lower() in words:
-                result.append(item.lower())
-    return result
+            word_possibilities.append(''.join(elem[0] for elem in p)) # Joins letters into one string
+        # pdb.set_trace()
+    word_set = set(word_possibilities) & words # intersection of sets!
+    return word_set
 
 def dfs(graph, word, node=' '):
     """
