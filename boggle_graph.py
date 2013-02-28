@@ -27,7 +27,7 @@ def get_neighbors(node, board, position):
 	Returns a list of the reachable neighbors of a certain node at position (x,y) on the board
 	"""
 	result = []
-	x, y = position[0], position[1]
+	x, y = position
 	a, b = x-1, y-1
 	neighbors = [(board[x-1][y-1], (a-1,b-1)), (board[x-1][y], (a-1,b)), \
 				(board[x-1][y+1], (a-1, b+1)), (board[x][y-1], (a, b-1)), \
