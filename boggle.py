@@ -94,13 +94,14 @@ def dfs(graph, word, node=' '):
     visited[(node)] = False
     return False
 
-permutations = boggle(board)  
-board, position = boggle_graph.make_board(board, n)
-graph = boggle_graph.make_graph(board, position)
-for word in permutations: 
-    visited = {}
-    if dfs(graph, ' '+word):
-        print word
+if __name__ == "__main__":
+    permutations = boggle(board)
+    board, position = boggle_graph.make_board(board, n)
+    graph = boggle_graph.make_graph(board, position)
+    for word in permutations:
+        visited = {}
+        if dfs(graph, ' '+word):
+            print word
 
 
 
