@@ -77,10 +77,13 @@ if __name__ == "__main__":
     permutations = boggle(board)
     board, position = boggle_graph.make_board(board, n)
     graph = boggle_graph.make_graph(board, position)
+    count = 0
     for word in permutations:
         visited = {}
         if dfs(graph, ' '+word):
             print word
+            count += 1
+    print count
 
 
 
