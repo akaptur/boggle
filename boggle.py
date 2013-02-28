@@ -10,16 +10,14 @@ using those letters
 import itertools
 import argparse
 import boggle_graph
+import sys
 
 """
 Parses the arguments from the command line and calls the function boggle
 """
-parser = argparse.ArgumentParser()
-parser.add_argument("board", nargs = 1, help="a string of characters (nxn board)")
-parser.add_argument("n", nargs = 1, help="n where n is the width or height of the board")
-args = parser.parse_args()
-board = args.board[0]
-n = int(args.n[0])
+
+board = sys.argv[1]
+n = int(sys.argv[2])
 
 visited = {}
 
