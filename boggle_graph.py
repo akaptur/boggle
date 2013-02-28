@@ -2,19 +2,19 @@
 Generate a graph of the boggle board
 """
 
-def make_board(B, n):
+def make_board(letters, board_dimensions):
 	"""
 	Returns a 2D matrix of the n x n board that is padded with None 
 	and returns a dictionary of the positioning of the letters on the board 
 	"""
-	board = [[None for i in xrange(n+2)] for i in xrange(n+2)]
+	board = [[None for i in xrange(board_dimensions+2)] for i in xrange(board_dimensions+2)]
 	position = {}
 	x = 0
 	y = 0
-	for letter in (' '.join(B)).split():
+	for letter in (' '.join(letters)).split():
 		position[x, y] = letter.lower()
 		y += 1
-		if y >= n:
+		if y >= board_dimensions:
 			y = 0
 			x += 1
 
