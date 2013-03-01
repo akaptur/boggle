@@ -42,9 +42,8 @@ def make_graph(board, position):
 	as the values
 	"""
 	graph = {}
-	graph['*'] = [] # wildcard node - can start at any point on board
+	graph['*'] = [(position[node], node) for node in position] # wildcard node - can start at any point on board
 	for node in position:
 		graph[(position[node], node)] = get_neighbors(position[node], board, (node[0]+1, node[1]+1))
-		graph['*'].append((position[node], node))
 	return graph	
 
