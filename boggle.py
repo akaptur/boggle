@@ -52,23 +52,20 @@ def boggle(letters):
     word_set = set(word_possibilities) & words # intersection of sets!
     return word_set
 
-def dfs(graph, word, node='*'):
+def dfs(visited_nodes, graph, word, node='*'):
     """
     Performs depth-first-search on the graph, returns True if the word is present
     """
-    global visited
     # base case
     if word[0] in node and len(word) <= 1:
         return True
     if word[0] not in node:
         return False
     # recursive step
-    visited[(node)] = True 
     for neighbor in graph[node]:
-        if not visited.get((neighbor), False):
-            if dfs(graph, word[1:], neighbor):
+        if neighbor not in visited_nodes:
+            if dfs(visited_nodes+[node], graph, word[1:], neighbor):
                 return True
-    visited[(node)] = False
     return False
 
 if __name__ == "__main__":
@@ -77,8 +74,7 @@ if __name__ == "__main__":
     graph = boggle_graph.make_graph(board, position)
     count = 0
     for word in permutations:
-        visited = {}
-        if dfs(graph, '*'+word):
+        if dfs([], graph, '*'+word):
             print word
             count += 1
     print count
