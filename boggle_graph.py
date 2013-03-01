@@ -22,28 +22,34 @@ def make_board(letters, board_dimensions):
 		board[x+1][y+1] = position[(x,y)]
 	return board, position
 
-def get_neighbors(board, current_position):
+def get_neighbors(current_position, mapping):
 	"""
 	Returns a list of the reachable neighbors of a certain node at position (x,y) on the board
 	"""
-	x, y = current_position
-	a, b = x-1, y-1
-	neighbors = [(board[x-1][y-1], (a-1,b-1)), (board[x-1][y], (a-1,b)), \
-				(board[x-1][y+1], (a-1, b+1)), (board[x][y-1], (a, b-1)), \
-				(board[x][y+1], (a,b+1)), (board[x+1][y-1], (a+1, b-1)), \
-				(board[x+1][y], (a+1, b)), (board[x+1][y+1], (a+1, b+1))]
-
-	neighbors = [n for n in neighbors if n[0]]
+	neighbors = []
+	for other_position in mapping:
+		if reachable(current_position, other_position):
+			neighbors.append((mapping[other_position], other_position))
 	return neighbors
 
-def make_graph(board, position):
+def reachable(current_position, other_position):
+	x1, y1 = current_position
+	x2, y2 = other_position
+	x_dist = abs(x2-x1)
+	y_dist = abs(y2-y1)
+	x_reachable = (x_dist <= 1)
+	y_reachable = (y_dist <= 1)
+	return x_reachable and y_reachable and (x_dist + y_dist > 0)
+
+
+def make_graph(board, mapping):
 	"""
 	Returns a dictionary with the nodes as the keys and the reachable neighbors
 	as the values
 	"""
 	graph = {}
-	graph['*'] = [(position[node], node) for node in position] # wildcard node - can start at any point on board
-	for node in position:
-		graph[(position[node], node)] = get_neighbors(board, (node[0]+1, node[1]+1))
+	graph['*'] = [(mapping[node], node) for node in mapping] # wildcard node - can start at any point on board
+	for node in mapping:
+		graph[(mapping[node], node)] = get_neighbors(node, mapping)
 	return graph	
 
