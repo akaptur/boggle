@@ -42,14 +42,14 @@ def dfs(visited_nodes, graph, node=('',(None,None))):
     visited_nodes = visited_nodes + [node]
 
     word_fragment = "".join([letter for letter, position in visited_nodes]) 
-    print word_fragment
+    # print word_fragment
     # pdb.set_trace()
 
     if len(word_fragment) >= 3 and word_fragment in dictionary:
         yield word_fragment
 
     good_neighbors = [n for n in graph[node] if n not in visited_nodes]
-    print "good_neighbors", good_neighbors
+    # print "good_neighbors", good_neighbors
     for neighbor in good_neighbors:
         for result in dfs(visited_nodes, graph, neighbor):
             yield result
@@ -62,9 +62,11 @@ if __name__ == "__main__":
     graph = boggle_graph.make_graph(board, position)
     words_out = []
     for word in dfs([], graph):
+        print word
         words_out.append(word)
-    print words_out
-    print len(words_out)
+    answers = set(words_out)
+    print len(answers)
+    # time for CATSJAOREKONVUES 4 = 1m22.705s
 
 
 
