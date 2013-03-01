@@ -22,7 +22,7 @@ def make_board(letters, board_dimensions):
 		board[x+1][y+1] = position[(x,y)]
 	return board, position
 
-def get_neighbors(node, board, current_position):
+def get_neighbors(board, current_position):
 	"""
 	Returns a list of the reachable neighbors of a certain node at position (x,y) on the board
 	"""
@@ -44,6 +44,6 @@ def make_graph(board, position):
 	graph = {}
 	graph['*'] = [(position[node], node) for node in position] # wildcard node - can start at any point on board
 	for node in position:
-		graph[(position[node], node)] = get_neighbors(position[node], board, (node[0]+1, node[1]+1))
+		graph[(position[node], node)] = get_neighbors(board, (node[0]+1, node[1]+1))
 	return graph	
 
