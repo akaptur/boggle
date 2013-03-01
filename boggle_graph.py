@@ -48,7 +48,7 @@ def make_graph(board, mapping):
 	as the values
 	"""
 	graph = {}
-	graph['*'] = [(mapping[node], node) for node in mapping] # wildcard node - can start at any point on board
+	graph[('',(None,None))] = [(mapping[node], node) for node in mapping] # wildcard node - can start at any point on board
 	for node in mapping:
 		graph[(mapping[node], node)] = get_neighbors(node, mapping)
 	return graph	

@@ -34,50 +34,37 @@ def create_dictionary(dictionary=dictionary_path):
         print "No dictionary at", dictionary_path, ". Please enter path to dictionary at command line."
         sys.exit()
 
-def boggle(letters):
-    """
-    Prints all permutations that are available in the dictionary
-    """
-    result = []
-    words = create_dictionary()
-    letters = letters.lower()
-    
-    # Iterates through all possible lengths (words of length 3 - length of board)
-    word_possibilities = []
-    for i in xrange(3, len(letters)+1):
-        permutations = itertools.permutations(letters, i)
-        for p in permutations:  
-            word_possibilities.append(''.join(elem[0] for elem in p)) # Joins letters into one string
-        # pdb.set_trace()
-    word_set = set(word_possibilities) & words # intersection of sets!
-    return word_set
-
-def dfs(visited_nodes, graph, word, node='*'):
+def dfs(visited_nodes, graph, node=('',(None,None))):
     """
     Performs depth-first-search on the graph, returns True if the word is present
     """
-    # base case
-    if word[0] in node and len(word) <= 1:
-        return True
-    if word[0] not in node:
-        return False
-    # recursive step
-    for neighbor in graph[node]:
-        if neighbor not in visited_nodes:
-            if dfs(visited_nodes+[node], graph, word[1:], neighbor):
-                return True
-    return False
+    global dictionary
+    visited_nodes = visited_nodes + [node]
+
+    word_fragment = "".join([letter for letter, position in visited_nodes]) 
+    print word_fragment
+    # pdb.set_trace()
+
+    if len(word_fragment) >= 3 and word_fragment in dictionary:
+        yield word_fragment
+
+    good_neighbors = [n for n in graph[node] if n not in visited_nodes]
+    print "good_neighbors", good_neighbors
+    for neighbor in good_neighbors:
+        for result in dfs(visited_nodes, graph, neighbor):
+            yield result
+
 
 if __name__ == "__main__":
-    permutations = boggle(letters)
+    dictionary = create_dictionary()
+    print "dictionary created"
     board, position = boggle_graph.make_board(letters, n)
     graph = boggle_graph.make_graph(board, position)
-    count = 0
-    for word in permutations:
-        if dfs([], graph, '*'+word):
-            print word
-            count += 1
-    print count
+    words_out = []
+    for word in dfs([], graph):
+        words_out.append(word)
+    print words_out
+    print len(words_out)
 
 
 
