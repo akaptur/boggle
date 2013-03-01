@@ -23,8 +23,6 @@ if len(sys.argv) == 4:
 else:
     dictionary_path = '/usr/share/dict/words'
 
-visited = {}
-
 def create_dictionary(dictionary=dictionary_path):
     """
     Imports words from a local dictionary into a python set
